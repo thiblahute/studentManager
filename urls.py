@@ -16,5 +16,5 @@ urlpatterns = patterns('',
 
     # Uncomment the next line to enable the admin:
     (r'^admin/', include(admin.site.urls)),
-    (r'^HolaMundo/', 'studentManager.sitioPrincipal.views.HolaMundo'),
+    (r'^', 'studentManager.sitioPrincipal.views.HolaMundo'),
 )
