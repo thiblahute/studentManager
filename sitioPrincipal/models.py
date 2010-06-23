@@ -1,38 +1,34 @@
 from django.db import models
+from django.contrib.auth.models import User
+
+class Persona(models.Model):
+    user = models.ForeignKey(User, unique=True, related_name='profile')
 
 class Ramo(models.Model):
-    pass
-
-class Profesor(models.Model):
-    pass
-
-class Promocion(models.Model):
-    pass
-
-class Alumno(models.Model):
-    pass
-
-class Ano(models.Model):
-    pass
-
-class Carrera(models.Model):
     nombre = models.CharField(max_length=100)
+    descripcion = models.CharField(max_length=500)
+    profesor = models.ForeignKey(Persona)
+    estudiantes = models.ManyToManyField(Persona, related_name='test')
 
-    #Relaciones
-    ramos = models.ManyToManyField(Ramo)
-    jefeCarrera = models.OneToOneField(Profesor)
-
-# Create your models here.
-class Profesor(models.Model):
-    rut = models.CharField(max_length=30, primary_key=True)
+class Profesor(Persona):
     apelido = models.CharField(max_length=100)
     nombre = models.CharField(max_length=100)
 
+class Carrera(models.Model):
+    nombre = models.CharField(max_length=100)
+    ramos = models.ManyToManyField(Ramo)
     #Relaciones
-    jefeCarrera = models.OneToOneField(Carrera)
+    jefeCarrera = models.ForeignKey('Profesor')
 
-class Alumno(models.Model):
-    rut = models.CharField(max_length=30, primary_key=True)
+class Ano(models.Model):
+    ano = models.IntegerField(primary_key=True)
+    #Relaciones
+
+class Promocion(models.Model):
+    #Relaciones
+    ano = models.ForeignKey(Ano)
+
+class Alumno(Persona):
     apelido = models.CharField(max_length=100)
     nombre = models.CharField(max_length=100)
     telefono = models.CharField(max_length=100)
@@ -44,15 +40,6 @@ class Alumno(models.Model):
     #Relaciones
     carrera = models.ForeignKey(Carrera)
     promocion = models.ForeignKey(Promocion)
-    solicitud = models.ManyToManyField(Alumno, through='Solicitud')
-
-class Ramo(models.Model):
-    nombre = models.CharField(max_length=100)
-    descripcion = models.CharField(max_length=500)
-
-    #Relaciones
-    profesor = models.ForeignKey(Profesor)
-    estudiantes = models.ManyToManyField(Alumno)
 
 class Carrera(models.Model):
     nombre = models.CharField(max_length=100)
@@ -60,14 +47,6 @@ class Carrera(models.Model):
     #Relaciones
     ramos = models.ManyToManyField(Ramo)
     jefeCarrera = models.OneToOneField(Profesor)
-
-class Promocion(models.Model):
-    #Relaciones
-    ano = models.ForeignKey(Ano)
-
-class Ano(models.Model):
-    ano = models.IntegerField(primary_key=True)
-    #Relaciones
 
 class Asignatura(models.Model):
     seccion = models.IntegerField()
