@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div align="center" class="Estilo2" style="Z-INDEX: 107; LEFT: 355px; POSITION: absolute; TOP: 60px; width: 400px; height: 18px;"> 
+      Agregar un estudiante<br><br>
+    <form method="post" action="">
+        <table>
+            <tr>
+                <td>{{ form.rut.label_tag }} :</td>
+                <td>{{ form.rut}} </td>
+            </tr>
+            <tr>
+                <td>{{ form.contrasena.label_tag }} :</td>
+                <td>{{ form.contrasena}} </td>
+            </tr>
+            <tr>
+                <td>{{ form.apelido.label_tag }} :</td>
+                <td>{{ form.apelido}} </td>
+            </tr>
+            <tr>
+                <td>{{ form.nombre.label_tag }} :</td>
+                <td>{{ form.nombre}} </td>
+            </tr>
+            <tr>
+                <td>{{ form.telefono.label_tag }} :</td>
+                <td>{{ form.telefono}} </td>
+            </tr>
+            <tr>
+                <td>{{ form.telefono_casa.label_tag }} :</td>
+                <td>{{ form.telefono_casa}} </td>
+            </tr>
+            <tr>
+                <td>{{ form.direccion.label_tag }} :</td>
+                <td>{{ form.direccion}} </td>
+            </tr>
+            <tr>
+                <td>{{ form.direccion_casa.label_tag }} :</td>
+                <td>{{ form.direccion_casa}} </td>
+            </tr>
+            <tr>
+                <td>{{ form.estado.label_tag }} :</td>
+                <td>{{ form.estado}} </td>
+            </tr>
+            <tr>
+                <td>{{ form.ano.label_tag }} :</td>
+                <td>{{ form.ano }} </td>
+            </tr>
+            <tr>
+                <td>{{ form.carrera.label_tag }} :</td>
+                <td>{{ form.carrera}} </td>
+            </tr>
+        </table>
+        <input type="submit" value="Agregar estudiante" />
+    </form>
+</div>
+{% endblock %}

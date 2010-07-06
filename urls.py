@@ -35,21 +35,21 @@ promocion_ressource = Collection(
 )
 
 urlpatterns = patterns('',
-    # Example:
-    # (r'^studentManager/', include('studentManager.foo.urls')),
-
-    # Uncomment the admin/doc line below and add 'django.contrib.admindocs' 
-    # to INSTALLED_APPS to enable admin documentation:
-    # (r'^admin/doc/', include('django.contrib.admindocs.urls')),
-
-    # Uncomment the next line to enable the admin:
     (r'^admin/', include(admin.site.urls)),
-    (r'^login/', 'studentManager.sitioPrincipal.views.Login'),
-    (r'^malla/', 'studentManager.sitioPrincipal.views.Malla'),
-    (r'^vista/', 'studentManager.sitioPrincipal.views.Vista'),
+    (r'^login/', 'studentManager.sitioPrincipal.views.login.log'),
+    (r'^accounts/login/', 'studentManager.sitioPrincipal.views.login.log'),
+    (r'^logout/', 'studentManager.sitioPrincipal.views.login.logOut'),
+    (r'^accounts/logout/', 'studentManager.sitioPrincipal.views.login.logOut'),
+    (r'^malla/', 'studentManager.sitioPrincipal.views.malla.malla'),
+    (r'^vista/', 'studentManager.sitioPrincipal.views.vista.vista'),
+    (r'^menu/', 'studentManager.sitioPrincipal.views.menu.menu'),
+    (r'^addStudent/', 'studentManager.sitioPrincipal.views.profesor.addStudent'),
+    (r'^addPromocion/', 'studentManager.sitioPrincipal.views.profesor.addPromocion'),
+    (r'^addRamo/', 'studentManager.sitioPrincipal.views.profesor.addRamo'),
+    (r'^viewStudents/', 'studentManager.sitioPrincipal.views.profesor.viewStudents'),
     (r'^xml/alumno/(.*?)/?$', alumno_ressource),
     (r'^xml/carrera/(.*?)/?$', carrera_ressource),
     (r'^xml/promocion/(.*?)/?$', promocion_ressource),
     (r'^xml/login/(.*?)/?$', login),
-
+    #(r'^', 'studentManager.sitioPrincipal.views.menu.menu'),
 )

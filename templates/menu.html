@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div align="center" class="Estilo2" style="Z-INDEX: 107; LEFT: 355px; POSITION: absolute; TOP: 60px; width: 800px; height: 18px;"> 
+    <table>
+        <tr>
+            <td>Usario:</td>
+            <td>{{nombreUsario}}</td>
+        </tr>
+        <tr>
+            <td>RUT:</td>
+            <td>{{ rut }}</td>
+        </tr>
+        {%if alumno %}
+            <tr>
+                <td>Carrera:</td>
+                <td>{{ carrera }}</td>
+            </tr>
+            <tr></tr>
+            <tr>
+                <td>Ano ingresso:</td>
+                <td>{{ ano }}</td>
+            </tr>
+        {%endif%}
+    </table>
+    {% if not alumno %} 
+        <p style="font-size:14">
+           <a href='/addStudent'>Agregar estudiante</a>
+        </p>
+        <p style="font-size:14">
+           <a href='/addRamo'>Agregar ramo</a>
+        </p>
+        <p style="font-size:14">
+           <a href='/addPromocion'>Agregar promocion</a>
+        </p>
+        <p style="font-size:14">
+           <a href='/viewStudents'>Ver todos los estudiantes</a>
+        </p>
+    {%endif%}
+</div>
+{% endblock %}
+

@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div align="center" class="Estilo2" style="Z-INDEX: 107; LEFT: 355px; POSITION: absolute; TOP: 60px; width: 800px; height: 18px;"> 
+      Agregar un Ramo<br><br>
+    <form method="post" action="">
+        <table>
+            <tr>
+                <td>{{ form.nombre.label_tag }} :</td>
+                <td>{{ form.nombre}} </td>
+            </tr>
+            <tr>
+                <td>{{ form.descripcion.label_tag }} :</td>
+                <td>{{ form.descripcion}} </td>
+            </tr>
+            <tr>
+                <td>{{ form.profesor.label_tag }} :</td>
+                <td>{{ form.profesor}} </td>
+            </tr>
+        </table>
+        <input type="submit" value="Agregar Promocion" />
+    </form>
+</div>
+{% endblock %}

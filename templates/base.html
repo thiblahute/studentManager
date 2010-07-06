@@ -1,0 +1,72 @@
+<html>
+<head>
+<title>Sistema Login</title>
+<meta name="generator" content="Bluefish 1.0.7">
+<meta name="author" content="DaveX">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<style type="text/css">
+<!--
+body {
+	background-image: url("http://ubuntuone.com/p/7kP/")
+}
+.Estilo2 {	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 40px;
+	color: #000000;
+	
+}
+.Estilo3 {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+}
+
+#Layer1 {
+	position:absolute;
+	left:405px;
+	top:125px;
+	width:171px;
+	height:19px;
+	z-index:110;
+}
+.Estilo4 {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	color: #000000;
+	font-weight: bold;
+}
+#Layer3 {
+	position:absolute;
+	left:92px;
+	top:436px;
+	width:581px;
+	height:22px;
+	z-index:111;
+}
+#Layer4 {
+	position:absolute;
+	left:388px;
+	top:154px;
+	width:107px;
+	height:51px;
+	z-index:112;
+}
+
+
+--
+</style>
+
+</head>
+<body>
+    {% if logged %}
+        <div align=right>
+           <a href = /logout>log-out</a> 
+           <a href = /menu>menu</a> 
+        </div>
+    {% else %}
+        <div>
+           <a href = /login>log-in</a> 
+        </div>
+    {% endif %}
+    {% block content %}
+    {% endblock %}
+</body>
+</html>

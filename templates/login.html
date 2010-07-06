@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div align="center" class="Estilo2" style="Z-INDEX: 107; LEFT: 355px; POSITION: absolute; TOP: 60px; width: 800px; height: 18px;"> 
+      SISTEMA GESTIÓN UNIVERSITARIA<br><br>
+    <form method="post" action="">
+        <table>
+            <tr>
+                <td>{{ form.usario.label_tag }}</td>
+                <td>{{ form.usario }}</td>
+            </tr>
+            <tr>
+                <td>{{ form.contrasena.label_tag }}</td>
+                <td>{{ form.contrasena }}</td>
+            </tr>
+        </table>
+        <input type="submit" value="login" />
+    </form>
+</div>
+{% endblock %}

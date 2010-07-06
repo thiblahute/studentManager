@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div align="center" class="Estilo2" style="Z-INDEX: 107; LEFT: 355px; POSITION: absolute; TOP: 60px; width: 400px; height: 18px;"> 
+      Agregar un estudiante<br><br>
+    <form method="post" action="">
+        <table>
+            <tr>
+                <td>{{ promocion.ano.label_tag }} :</td>
+                <td>{{ promocion.ano}} </td>
+            </tr>
+        </table>
+        <input type="submit" value="Agregar Promocion" />
+    </form>
+</div>
+{% endblock %}

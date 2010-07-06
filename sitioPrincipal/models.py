@@ -53,7 +53,9 @@ class Asignatura(models.Model):
     periodo =  models.IntegerField()
 
     #Relaciones
+    ano = models.ForeignKey(Ano)
     carrera = models.ForeignKey(Carrera)
+    ramo = models.ForeignKey(Ramo)
     alumnos = models.ManyToManyField(Alumno, through='Prueba')
 
 class Prueba(models.Model):

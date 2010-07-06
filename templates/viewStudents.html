@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div align="center" class="Estilo2" style="Z-INDEX: 107; LEFT: 355px; POSITION: absolute; TOP: 60px; width: 800px; height: 18px;"> 
+      Vista de los estudiantes<br><br>
+        <table border=1>
+            <tr bgcolor=red>
+                <td>Nombre</td>
+                <td>Apelido</td>
+                <td>Promocion</td>
+            </tr>
+            {% for alumno in alumnos %}
+            <tr>
+                <td>{{alumno.1}}</td>
+                <td>{{alumno.2}}</td>
+                <td>{{alumno.3}}</td>
+                <td><a href=/malla/{{alumno.0}}>Ver malla</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+</div>
+{% endblock %}
