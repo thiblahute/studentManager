@@ -17,7 +17,6 @@
                 <td>Carrera:</td>
                 <td>{{ carrera }}</td>
             </tr>
-            <tr></tr>
             <tr>
                 <td>Ano ingresso:</td>
                 <td>{{ ano }}</td>
@@ -32,10 +31,17 @@
            <a href='/addRamo'>Agregar ramo</a>
         </p>
         <p style="font-size:14">
+           <a href='/addAsignatura'>Agregar asignatura</a>
+        </p>
+        <p style="font-size:14">
            <a href='/addPromocion'>Agregar promocion</a>
         </p>
         <p style="font-size:14">
            <a href='/viewStudents'>Ver todos los estudiantes</a>
+        </p>
+    {%else%}
+        <p style="font-size:14">
+            <a href=/malla/{{rut}}>Ver malla</a></td>
         </p>
     {%endif%}
 </div>

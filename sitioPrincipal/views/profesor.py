@@ -39,6 +39,13 @@ class AddRamoForm(forms.Form):
     descripcion = forms.CharField()
     profesor = forms.CharField(widget=forms.Select(choices=[(profesor.user.username, profesor.nombre+" "+profesor.apelido) for profesor in models.Profesor.objects.all()]))
 
+class AddAsignaturaForm(forms.Form):
+    seccion = forms.IntegerField()
+    periodos = forms.IntegerField()
+    ano = forms.CharField(widget=forms.Select(choices=[(ano.ano, ano.ano) for ano in models.Ano.objects.all()]))
+    carrera = forms.CharField(widget=forms.Select(choices=[(carrera.nombre, carrera.nombre) for carrera in models.Carrera.objects.all()]))
+    ramo = forms.CharField(widget=forms.Select(choices=[(ramo.id, ramo.nombre) for ramo in models.Ramo.objects.all()]))
+
 class AddStudentForm(forms.Form):
     rut = forms.CharField(max_length=100)
     contrasena = forms.CharField(widget = forms.PasswordInput())
@@ -53,9 +60,45 @@ class AddStudentForm(forms.Form):
     carrera = forms.CharField(widget=forms.Select(choices=[(carrera.nombre, carrera.nombre) for carrera in models.Carrera.objects.all()]))
 
 class AsignaturaPromocionForm(forms.Form):
-    asignatura = forms.CharField(widget=forms.Select(choices=[(ano.ano, ano.ano) for ano in models.Ano.objects.all()]))
-    promocion = forms.CharField(widget=forms.Select(choices=[(promocion.ano.ano, promocion.ano.ano) for promocion in models.Promocion.objects.all()]))
+    choice =[(asignatura.id, str(asignatura.ano.ano)+' '+asignatura.ramo.nombre) for asignatura in models.Asignatura.objects.all()]
+    choice.append(("Todos", "Todos"))
+    choice.reverse()
+    asignatura = forms.CharField(widget=forms.Select(choices=choice))
+    choice = [(promocion.ano.ano, promocion.ano.ano) for promocion in models.Promocion.objects.all()]
+    choice.append(("Todos", "Todos"))
+    choice.reverse()
+    promocion = forms.CharField(widget=forms.Select(choices=choice))
 
+@login_required
+def addAsignatura(request):
+    if not models.Profesor.objects.filter(user=request.user):
+        return redirect('/menu',
+                        permanent=True)
+    form = AddAsignaturaForm()
+    try:
+       seccion = request.POST['seccion']
+       periodos = request.POST['periodos']
+       ano = request.POST['ano']
+       carrera = request.POST['carrera']
+       ramo = request.POST['ramo']
+    except:
+        return render_to_response('addAsignatura.html',
+                                 {'logged' : request.user.is_authenticated(),
+                                  'form': form,
+                                  'title': "Agregar asignatura"})
+
+    anoObj = models.Ano.objects.filter(ano=ano)[0]
+    carreraObj = models.Carrera.objects.filter(nombre=carrera)[0]
+    ramoObj = models.Ramo.objects.filter(id=ramo)[0]
+    asignatura = models.Asignatura()
+    asignatura.ano = anoObj
+    asignatura.ramo = ramoObj
+    asignatura.carrera = carreraObj
+    asignatura.seccion = seccion
+    asignatura.periodo = periodos
+    asignatura.save()
+    return redirect('/menu',
+                    permanent=True)
 @login_required
 def addRamo(request):
     if not models.Profesor.objects.filter(user=request.user):
@@ -69,6 +112,7 @@ def addRamo(request):
     except:
         return render_to_response('addRamo.html',
                                  {'logged' : request.user.is_authenticated(),
+                                  'title': 'Agregar ramo',
                                   'form': form})
     profesorObj = models.Profesor.objects.filter(user = models.User.objects.filter(username = profesor)[0])[0]
     ramo = models.Ramo()
@@ -90,6 +134,7 @@ def addPromocion(request):
     except:
         return render_to_response('addPromocion.html',
                                  {'logged' : request.user.is_authenticated(),
+                                  'title': 'Agregar promocion',
                                   'promocion': form})
     if not models.Ano.objects.filter(ano=ano):
         anoObj = models.Ano()
@@ -128,6 +173,7 @@ def addStudent(request):
     except:
         return render_to_response('addStudent.html',
                                  {'logged' : request.user.is_authenticated(),
+                                  'title': 'Agregar estudiante',
                                   'form': form})
 
     anoObj = models.Ano.objects.filter(ano=ano)[0]
@@ -171,10 +217,43 @@ def viewStudents(request):
     if not models.Profesor.objects.filter(user=request.user):
         return redirect('/menu',
                         permanent=True)
+    form = AsignaturaPromocionForm()
     alumnos = []
-    for alumno in models.Alumno.objects.all():
-        alumnos.append([alumno.user.username, alumno.nombre, alumno.apelido, alumno.promocion.ano.ano])
+    try:
+       promocion = request.POST['promocion']
+       asignatura = request.POST['asignatura']
+    except:
+        for alumno in models.Alumno.objects.all():
+            alumnos.append([alumno.user.username, alumno.nombre, alumno.apelido, alumno.promocion.ano.ano])
+
+        return render_to_response('viewStudents.html',
+                                 {'logged' : request.user.is_authenticated(),
+                                  'alumnos': alumnos,
+                                  'title': 'Ver alumnos',
+                                  'form': form})
+    if promocion != "Todos":
+        ano = models.Ano.objects.filter(ano=promocion)[0]
+        promocion = models.Promocion.objects.filter(ano=promocion)[0]
+    if asignatura != "Todos":
+        asignatura = models.Asignatura.objects.filter(id=asignatura)[0]
+        for alumno in asignatura.alumnos.all():
+            if promocion == "Todos":
+                alumnos.append([alumno.user.username, alumno.nombre, alumno.apelido, alumno.promocion.ano.ano])
+            else:
+                if alumno.promocion == promocion:
+                    alumnos.append([alumno.user.username, alumno.nombre, alumno.apelido, alumno.promocion.ano.ano])
+    else:
+        for alumno in models.Alumno.objects.all():
+            if promocion == "Todos":
+                alumnos.append([alumno.user.username, alumno.nombre, alumno.apelido, alumno.promocion.ano.ano])
+            else:
+                print "%s, %s" %(alumno.promocion.ano.ano, promocion.ano.ano)
+                if alumno.promocion.ano.ano == promocion.ano.ano:
+                    alumnos.append([alumno.user.username, alumno.nombre, alumno.apelido, alumno.promocion.ano.ano])
+                print alumnos
 
     return render_to_response('viewStudents.html',
                              {'logged' : request.user.is_authenticated(),
-                              'alumnos': alumnos})
+                              'title': 'Agregar alumnos',
+                              'alumnos': alumnos,
+                              'form': form})

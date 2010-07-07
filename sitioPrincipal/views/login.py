@@ -20,7 +20,9 @@ def log(request):
         password = request.POST['contrasena']
         user = authenticate(username=username, password=password)
     except:
-        return render_to_response('login.html', {'form': form})
+        return render_to_response('login.html',
+                                  {'form': form,
+                                   'title': "Conection"})
     if user is not None:
         if user.is_active:
             login(request, user)
@@ -30,10 +32,12 @@ def log(request):
         else:
             return render_to_response('login.html',
                                      {'form': form,
+                                      'title': 'Conection',
                                       'username' : username+" esta inactivo"})
     else:
         return render_to_response('login.html',
                                  {'logged' : request.user.is_authenticated(),
+                                  'title': 'Conection',
                                   'form': form,
                                   'username' : username + " y su contrasena no corresponden"})
 def logOut(request):

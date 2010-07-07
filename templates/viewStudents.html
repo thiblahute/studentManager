@@ -4,14 +4,29 @@
 
 <div align="center" class="Estilo2" style="Z-INDEX: 107; LEFT: 355px; POSITION: absolute; TOP: 60px; width: 800px; height: 18px;"> 
       Vista de los estudiantes<br><br>
+    <form method="post">
+        <table>
+            <tr>
+               <td> {{form.asignatura.label_tag }} :</td>
+               <td> {{form.asignatura}}</td>
+            </tr>
+            <tr>
+                <td>{{form.promocion.label_tag }} :</td>
+                <td>{{form.promocion}}</td>
+            </tr>
+        </table>
+        <input type="submit" value="Filtrar alumnos" />
+    </form>
         <table border=1>
             <tr bgcolor=red>
+                <td>Rut</td>
                 <td>Nombre</td>
                 <td>Apelido</td>
                 <td>Promocion</td>
             </tr>
             {% for alumno in alumnos %}
             <tr>
+                <td>{{alumno.0}}</td>
                 <td>{{alumno.1}}</td>
                 <td>{{alumno.2}}</td>
                 <td>{{alumno.3}}</td>
@@ -19,5 +34,8 @@
             </tr>
             {% endfor %}
         </table>
+        <p style="font-size:14">
+           <a href='/addStudent'>Agregar estudiante</a>
+        </p>
 </div>
 {% endblock %}

@@ -39,6 +39,7 @@ def menu(request):
         profe=profe[0]
         return render_to_response('menu.html',
                                  {'logged' : request.user.is_authenticated(),
+                                  'title': 'Menu principal',
                                   'nombreUsario': profe.nombre +
                                   " "+ profe.apelido, 'rut' : user.username})
 
@@ -47,6 +48,7 @@ def menu(request):
     carrera = alumno.carrera.nombre
     return render_to_response('menu.html',
                               { 'logged' : request.user.is_authenticated(),
+                                'title': 'Menu principal',
                                 'nombreUsario': alumno.nombre +' '+ alumno.apelido,
                                 'rut' : user.username,
                                 'ano': ano,
