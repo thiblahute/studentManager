@@ -31,20 +31,36 @@ from django.forms import ModelForm
 
 import sitioPrincipal.models as models
 
+class AnoWidget(forms.ModelChoiceField):
+     def label_from_instance(self, obj):
+         return "%i" % obj.ano
+
+class CarreraWidget(forms.ModelChoiceField):
+     def label_from_instance(self, obj):
+         return "%s" % obj.nombre
+
+class RamoWidget(forms.ModelChoiceField):
+     def label_from_instance(self, obj):
+         return "%s" % obj.nombre
+
+class ProfeWidget(forms.ModelChoiceField):
+     def label_from_instance(self, obj):
+         return "%s" % obj.nombre+" "+obj.apelido
+
 class AddPromocionForm(forms.Form):
     ano = forms.CharField(max_length=4)
 
 class AddRamoForm(forms.Form):
     nombre = forms.CharField()
     descripcion = forms.CharField()
-    profesor = forms.CharField(widget=forms.Select(choices=[(profesor.user.username, profesor.nombre+" "+profesor.apelido) for profesor in models.Profesor.objects.all()]))
+    profesor = ProfeWidget(models.Profesor.objects.all())
 
 class AddAsignaturaForm(forms.Form):
     seccion = forms.IntegerField()
     periodos = forms.IntegerField()
-    ano = forms.CharField(widget=forms.Select(choices=[(ano.ano, ano.ano) for ano in models.Ano.objects.all()]))
-    carrera = forms.CharField(widget=forms.Select(choices=[(carrera.nombre, carrera.nombre) for carrera in models.Carrera.objects.all()]))
-    ramo = forms.CharField(widget=forms.Select(choices=[(ramo.id, ramo.nombre) for ramo in models.Ramo.objects.all()]))
+    ano = AnoWidget(models.Ano.objects.all())
+    carrera = CarreraWidget(models.Carrera.objects.all())
+    ramo = RamoWidget(models.Ramo.objects.all())
 
 class AddStudentForm(forms.Form):
     rut = forms.CharField(max_length=100)
@@ -56,18 +72,17 @@ class AddStudentForm(forms.Form):
     direccion = forms.CharField(max_length=100)
     direccion_casa = forms.CharField(max_length=100)
     estado = forms.CharField(max_length=100)
-    ano = forms.CharField(widget=forms.Select(choices=[(ano.ano, ano.ano) for ano in models.Ano.objects.all()]))
-    carrera = forms.CharField(widget=forms.Select(choices=[(carrera.nombre, carrera.nombre) for carrera in models.Carrera.objects.all()]))
+    ano = AnoWidget(models.Ano.objects.all())
+    carrera = CarreraWidget(models.Carrera.objects.all())
+
 
 class AsignaturaPromocionForm(forms.Form):
-    choice =[(asignatura.id, str(asignatura.ano.ano)+' '+asignatura.ramo.nombre) for asignatura in models.Asignatura.objects.all()]
-    choice.append(("Todos", "Todos"))
-    choice.reverse()
-    asignatura = forms.CharField(widget=forms.Select(choices=choice))
-    choice = [(promocion.ano.ano, promocion.ano.ano) for promocion in models.Promocion.objects.all()]
-    choice.append(("Todos", "Todos"))
-    choice.reverse()
-    promocion = forms.CharField(widget=forms.Select(choices=choice))
+    class AsignaturaWidget(forms.ModelChoiceField):
+         def label_from_instance(self, obj):
+             return "%s" % str(obj.ano.ano)+' '+obj.ramo.nombre
+
+    asignatura = AsignaturaWidget(models.Asignatura.objects.all())
+    promocion = AnoWidget(models.Ano.objects.all())
 
 @login_required
 def addAsignatura(request):
@@ -88,7 +103,7 @@ def addAsignatura(request):
                                   'title': "Agregar asignatura"})
 
     anoObj = models.Ano.objects.filter(ano=ano)[0]
-    carreraObj = models.Carrera.objects.filter(nombre=carrera)[0]
+    carreraObj = models.Carrera.objects.filter(id=carrera)[0]
     ramoObj = models.Ramo.objects.filter(id=ramo)[0]
     asignatura = models.Asignatura()
     asignatura.ano = anoObj
@@ -114,7 +129,7 @@ def addRamo(request):
                                  {'logged' : request.user.is_authenticated(),
                                   'title': 'Agregar ramo',
                                   'form': form})
-    profesorObj = models.Profesor.objects.filter(user = models.User.objects.filter(username = profesor)[0])[0]
+    profesorObj = models.Profesor.objects.filter(user = models.User.objects.filter(id = profesor)[0])[0]
     ramo = models.Ramo()
     ramo.profesor = profesorObj
     ramo.nombre = nombre
@@ -186,7 +201,7 @@ def addStudent(request):
     else:
         promocion = promocion[0]
 
-    carreraObj = models.Carrera.objects.filter(nombre = carrera)[0]
+    carreraObj = models.Carrera.objects.filter(id = carrera)[0]
     user = models.User()
     user.username = rut
     user.set_password(contrasena)
@@ -213,6 +228,7 @@ def addStudent(request):
 
     return redirect("/viewStudents", permanent=True)
 
+@login_required
 def viewStudents(request):
     if not models.Profesor.objects.filter(user=request.user):
         return redirect('/menu',
@@ -231,20 +247,21 @@ def viewStudents(request):
                                   'alumnos': alumnos,
                                   'title': 'Ver alumnos',
                                   'form': form})
-    if promocion != "Todos":
+    if promocion != "":
         ano = models.Ano.objects.filter(ano=promocion)[0]
         promocion = models.Promocion.objects.filter(ano=promocion)[0]
-    if asignatura != "Todos":
+
+    if asignatura != "":
         asignatura = models.Asignatura.objects.filter(id=asignatura)[0]
         for alumno in asignatura.alumnos.all():
-            if promocion == "Todos":
+            if promocion == "":
                 alumnos.append([alumno.user.username, alumno.nombre, alumno.apelido, alumno.promocion.ano.ano])
             else:
                 if alumno.promocion == promocion:
                     alumnos.append([alumno.user.username, alumno.nombre, alumno.apelido, alumno.promocion.ano.ano])
     else:
         for alumno in models.Alumno.objects.all():
-            if promocion == "Todos":
+            if promocion == "":
                 alumnos.append([alumno.user.username, alumno.nombre, alumno.apelido, alumno.promocion.ano.ano])
             else:
                 print "%s, %s" %(alumno.promocion.ano.ano, promocion.ano.ano)

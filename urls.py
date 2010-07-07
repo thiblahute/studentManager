@@ -13,10 +13,10 @@ from django.contrib import admin
 admin.autodiscover()
 
 login = Collection(
-                 queryset = Alumno.objects.all(),
-                 responder = XMLResponder(),
-                 authentication = HttpBasicAuthentication()
-             )
+    queryset = Alumno.objects.all(),
+    responder = XMLResponder(),
+    authentication = HttpBasicAuthentication()
+)
 
 
 alumno_ressource = Collection(
@@ -52,5 +52,4 @@ urlpatterns = patterns('',
     (r'^xml/carrera/(.*?)/?$', carrera_ressource),
     (r'^xml/promocion/(.*?)/?$', promocion_ressource),
     (r'^xml/login/(.*?)/?$', login),
-    #(r'^', 'studentManager.sitioPrincipal.views.menu.menu'),
 )

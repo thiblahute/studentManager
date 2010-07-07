@@ -34,12 +34,12 @@ promocion.ano = ano
 promocion.save()
 
 mbrunoUser = models.User()
-mbrunoUser.username = "7.025.369-1"
+mbrunoUser.username = "5"
 mbrunoUser.set_password("test")
 mbrunoUser.save()
 mbruno = models.Profesor()
-mbruno.apelido = "Bruno"
-mbruno.nombre = "Mario"
+mbruno.apelido = "Un profe"
+mbruno.nombre = "sor"
 mbruno.user = mbrunoUser
 mbruno.user_id = mbrunoUser.id
 mbruno.save()

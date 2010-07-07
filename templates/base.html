@@ -56,16 +56,14 @@ body {
 
 </head>
 <body>
+    <div align=right>
     {% if logged %}
-        <div align=right>
            <a href = /logout>log-out</a> 
            <a href = /menu>menu</a> 
-        </div>
     {% else %}
-        <div>
            <a href = /login>log-in</a> 
-        </div>
     {% endif %}
+    </div>
     {% block content %}
     {% endblock %}
 </body>
