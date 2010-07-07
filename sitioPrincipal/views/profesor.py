@@ -29,6 +29,9 @@ from django import forms
 from django.contrib.auth.decorators import login_required
 from django.forms import ModelForm
 
+import datetime
+now = datetime.datetime.now()
+
 import sitioPrincipal.models as models
 
 class AnoWidget(forms.ModelChoiceField):
@@ -46,6 +49,19 @@ class RamoWidget(forms.ModelChoiceField):
 class ProfeWidget(forms.ModelChoiceField):
      def label_from_instance(self, obj):
          return "%s" % obj.nombre+" "+obj.apelido
+
+class AsignaturaWidget(forms.ModelChoiceField):
+     def label_from_instance(self, obj):
+         return "%s" % str(obj.ano.ano)+' '+obj.ramo.nombre
+
+class StudentWidget(forms.ModelChoiceField):
+     def label_from_instance(self, obj):
+         return "%s" % obj.nombre+' '+obj.apelido
+
+class AddStudentAsignatura(forms.Form):
+    alumno = StudentWidget(models.Alumno.objects.filter(estado = 'activo'))
+    ano = models.Ano.objects.filter(ano = now.year)[0]
+    asignatura = AsignaturaWidget(models.Asignatura.objects.filter(ano=ano))
 
 class AddPromocionForm(forms.Form):
     ano = forms.CharField(max_length=4)
@@ -77,9 +93,6 @@ class AddStudentForm(forms.Form):
 
 
 class AsignaturaPromocionForm(forms.Form):
-    class AsignaturaWidget(forms.ModelChoiceField):
-         def label_from_instance(self, obj):
-             return "%s" % str(obj.ano.ano)+' '+obj.ramo.nombre
 
     asignatura = AsignaturaWidget(models.Asignatura.objects.all())
     promocion = AnoWidget(models.Ano.objects.all())
@@ -227,6 +240,40 @@ def addStudent(request):
 
 
     return redirect("/viewStudents", permanent=True)
+
+@login_required
+def addAlumnoAsignatura(request):
+    if not models.Profesor.objects.filter(user=request.user):
+        return redirect('/menu',
+                        permanent=True)
+    form = AddStudentAsignatura()
+    try:
+        alumno = request.POST['alumno']
+        asignatura = request.POST['asignatura']
+    except:
+        return render_to_response('addAlumnoAsignatura.html',
+                                 {'logged' : request.user.is_authenticated(),
+                                  'form': form,
+                                  'title': 'Agregar alumnos en asignatura'})
+    asignaturaObj = models.Asignatura.objects.filter(id=asignatura)[0]
+    alumnoObj = models.Alumno.objects.filter(id=alumno)[0]
+    if alumnoObj not in asignaturaObj.alumnos.all():
+        p = models.Prueba()
+        p.titulo='Primero prueba'
+        p.date="1900-01-01"
+        p.nota=4
+        p.asignatura=asignaturaObj
+        p.alumno=alumnoObj
+        p.save()
+        added = alumnoObj.nombre+" agragado a "+asignaturaObj.ramo.nombre
+    else:
+        added = alumnoObj.nombre+" estaba ya inscrita en "+asignaturaObj.ramo.nombre
+    return render_to_response('addAlumnoAsignatura.html',
+                             {'logged' : request.user.is_authenticated(),
+                              'form': form,
+                              'added': added,
+                              'title': 'Agregar alumnos en asignatura'})
+
 
 @login_required
 def viewStudents(request):
