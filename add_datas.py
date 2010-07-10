@@ -26,65 +26,52 @@
 from sitioPrincipal import models
 
 ano = models.Ano()
-ano.ano = 2007
+ano.ano = 2010
 ano.save()
 
 promocion = models.Promocion()
 promocion.ano = ano
 promocion.save()
 
-mbrunoUser = models.User()
-mbrunoUser.username = "5"
-mbrunoUser.set_password("test")
-mbrunoUser.save()
-mbruno = models.Profesor()
-mbruno.apelido = "Un profe"
-mbruno.nombre = "sor"
-mbruno.user = mbrunoUser
-mbruno.user_id = mbrunoUser.id
-mbruno.save()
+profeUser = models.User()
+profeUser.username = "5"
+profeUser.set_password("test")
+profeUser.save()
+profe = models.Profesor()
+profe.apelido = "Un profe"
+profe.nombre = "sor"
+profe.user = profeUser
+profe.user_id = profeUser.id
+profe.save()
 
 
 carreraInformatica = models.Carrera()
 carreraInformatica.nombre = "Informatica"
-carreraInformatica.jefeCarrera = mbruno
+carreraInformatica.jefeCarrera = profe
 carreraInformatica.save()
 
+introIng = models.Ramo()
+introIng.nombre = "Introduction ingénioria"
+introIng.save()
 
-davidUser = models.User()
-davidUser.username = "123.369.125-1"
-davidUser.set_password("test")
-davidUser.save()
-david = models.Alumno()
-david.apelido = "Vargas"
-david.nombre = "david"
-david.promocion = promocion
-david.user = davidUser
-david.user_id = davidUser.id
-david.carrera = carreraInformatica
-david.save()
+fisGraf1 = models.Ramo()
+fisGraf1.nombre = "Fis graf 1"
+fisGraf1.save()
 
-testUser = models.User()
-testUser.username = "23.037.160-1"
-testUser.set_password("test")
-testUser.save()
-test = models.Profesor()
-test.apelido = "test"
-test.nombre = "Test"
-test.user = testUser
-test.user_id = testUser.id
-test.save()
+fisGraf2 = models.Ramo()
+fisGraf2.nombre = "Fis graf 2"
+fisGraf2.parent = fisGraf1
+fisGraf2.save()
 
 IA = models.Ramo()
-IA.nombre = "Inteligencia Artificial"
-IA.profesor = mbruno
+IA.nombre = "Iteligencia de software"
 IA.save()
-IA.estudiantes.add(david)
-IA.save()
+
+tm = models.Ramo()
+tm.nombre = "Tecnologia multimedia"
+tm.profesor = profe
+tm.save()
 
 stat = models.Ramo()
 stat.nombre = "Estatistica"
-stat.profesor = test
-stat.save()
-stat.estudiantes.add(david)
 stat.save()

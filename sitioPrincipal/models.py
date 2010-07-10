@@ -5,10 +5,13 @@ class Persona(models.Model):
     user = models.ForeignKey(User, unique=True, related_name='profile')
 
 class Ramo(models.Model):
-    nombre = models.CharField(max_length=100)
+    nombre = models.CharField(max_length=100, primary_key=True)
     descripcion = models.CharField(max_length=500)
-    profesor = models.ForeignKey(Persona)
+
     estudiantes = models.ManyToManyField(Persona, related_name='test')
+    parent = models.ForeignKey('self', null=True, blank=True, related_name='children')
+
+#mptt.register(Ramo)
 
 class Profesor(Persona):
     apelido = models.CharField(max_length=100)
@@ -28,6 +31,7 @@ class Promocion(models.Model):
     #Relaciones
     ano = models.ForeignKey(Ano)
 
+
 class Alumno(Persona):
     apelido = models.CharField(max_length=100)
     nombre = models.CharField(max_length=100)
@@ -40,6 +44,12 @@ class Alumno(Persona):
     #Relaciones
     carrera = models.ForeignKey(Carrera)
     promocion = models.ForeignKey(Promocion)
+    ramo = models.ManyToManyField(Ramo, through='AlumnoRamo')
+
+class AlumnoRamo(models.Model):
+    passed = models.IntegerField()
+    alumno = models.ForeignKey(Alumno)
+    ramo = models.ForeignKey(Ramo)
 
 class Carrera(models.Model):
     nombre = models.CharField(max_length=100)
@@ -54,9 +64,14 @@ class Asignatura(models.Model):
 
     #Relaciones
     ano = models.ForeignKey(Ano)
+    profesor = models.ForeignKey(Profesor)
     carrera = models.ForeignKey(Carrera)
     ramo = models.ForeignKey(Ramo)
-    alumnos = models.ManyToManyField(Alumno, through='Prueba')
+    alumnos = models.ManyToManyField(Alumno, through='AsignAlumno')
+
+class AsignAlumno(models.Model):
+    alumno = models.ForeignKey(Alumno)
+    asignatura = models.ForeignKey(Asignatura)
 
 class Prueba(models.Model):
     titulo = models.CharField(max_length=100)

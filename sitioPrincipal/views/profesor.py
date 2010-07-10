@@ -77,6 +77,7 @@ class AddAsignaturaForm(forms.Form):
     ano = AnoWidget(models.Ano.objects.all())
     carrera = CarreraWidget(models.Carrera.objects.all())
     ramo = RamoWidget(models.Ramo.objects.all())
+    profesor = ProfeWidget(models.Profesor.objects.all())
 
 class AddStudentForm(forms.Form):
     rut = forms.CharField(max_length=100)
@@ -109,6 +110,7 @@ def addAsignatura(request):
        ano = request.POST['ano']
        carrera = request.POST['carrera']
        ramo = request.POST['ramo']
+       profesor = request.POST['profesor']
     except:
         return render_to_response('addAsignatura.html',
                                  {'logged' : request.user.is_authenticated(),
@@ -117,13 +119,15 @@ def addAsignatura(request):
 
     anoObj = models.Ano.objects.filter(ano=ano)[0]
     carreraObj = models.Carrera.objects.filter(id=carrera)[0]
-    ramoObj = models.Ramo.objects.filter(id=ramo)[0]
+    ramoObj = models.Ramo.objects.filter(nombre=ramo)[0]
+    profesorObj = models.Profesor.objects.filter(id=profesor)[0]
     asignatura = models.Asignatura()
     asignatura.ano = anoObj
     asignatura.ramo = ramoObj
     asignatura.carrera = carreraObj
     asignatura.seccion = seccion
     asignatura.periodo = periodos
+    asignatura.profesor = profesorObj
     asignatura.save()
     return redirect('/menu',
                     permanent=True)
@@ -230,6 +234,7 @@ def addStudent(request):
     alumno.user = user
     alumno.user_id = user.id
     alumno.carrera = carreraObj
+    alumno.estado = 'activo'
     alumno.save()
     try:
         user.save()
@@ -258,10 +263,8 @@ def addAlumnoAsignatura(request):
     asignaturaObj = models.Asignatura.objects.filter(id=asignatura)[0]
     alumnoObj = models.Alumno.objects.filter(id=alumno)[0]
     if alumnoObj not in asignaturaObj.alumnos.all():
-        p = models.Prueba()
-        p.titulo='Primero prueba'
-        p.date="1900-01-01"
-        p.nota=4
+
+        p = models.AsignAlumno()
         p.asignatura=asignaturaObj
         p.alumno=alumnoObj
         p.save()
