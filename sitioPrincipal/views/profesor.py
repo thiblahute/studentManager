@@ -27,7 +27,6 @@ from django.http import HttpResponse
 from django.shortcuts import render_to_response, redirect
 from django import forms
 from django.contrib.auth.decorators import login_required
-from django.forms import ModelForm
 
 import datetime
 now = datetime.datetime.now()
@@ -70,6 +69,7 @@ class AddRamoForm(forms.Form):
     nombre = forms.CharField()
     descripcion = forms.CharField()
     profesor = ProfeWidget(models.Profesor.objects.all())
+    requisitos = RamoWidget(models.Ramo.objects.all())
 
 class AddAsignaturaForm(forms.Form):
     seccion = forms.IntegerField()
@@ -141,16 +141,20 @@ def addRamo(request):
        nombre = request.POST['nombre']
        descripcion = request.POST['descripcion']
        profesor = request.POST['profesor']
+       ramoPadre = request.POST['requisitos']
     except:
         return render_to_response('addRamo.html',
                                  {'logged' : request.user.is_authenticated(),
                                   'title': 'Agregar ramo',
-                                  'form': form})
+                                  'form': form,
+                                  })
     profesorObj = models.Profesor.objects.filter(user = models.User.objects.filter(id = profesor)[0])[0]
+    ramoObj = models.Ramo.objects.filter(nombre=ramoPadre)[0]
     ramo = models.Ramo()
     ramo.profesor = profesorObj
     ramo.nombre = nombre
     ramo.descripcion = descripcion
+    ramo.parent = ramoObj
     ramo.save()
     return redirect('/menu',
                     permanent=True)

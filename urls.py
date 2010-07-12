@@ -4,8 +4,7 @@ from sitioPrincipal.models import Alumno, Promocion, Carrera
 #Rest API imports
 from django_restapi.model_resource import Collection
 from django_restapi.responder import XMLResponder
-from django_restapi.authentication import *
-from django_restapi_tests.polls.models import Poll
+from django_restapi.authentication import HttpBasicAuthentication
 
 
 # Uncomment the next two lines to enable the admin:
@@ -17,7 +16,6 @@ login = Collection(
     responder = XMLResponder(),
     authentication = HttpBasicAuthentication()
 )
-
 
 alumno_ressource = Collection(
     queryset = Alumno.objects.all(),
