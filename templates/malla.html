@@ -2,8 +2,48 @@
 
 {% block content %}
 
-<div align="center" class="Estilo2" style="Z-INDEX: 107; LEFT: 355px; POSITION: absolute; TOP: 60px; width: 800px; height: 18px;"> 
+<div align="center" class="Estilo2" style="Z-INDEX: 107; LEFT: 355px; POSITION: absolute; TOP: 60px; width: 900px; height: 18px;"> 
       Vista de la malla curricular de {{nombre}}<br><br>
-    <img src="http://lh6.ggpht.com/_3mLd5CtlHo4/TDOwgRxFOwI/AAAAAAAAHTk/IpW-UEoCfDI/s640/dibujo.jpg" border="0" name="malla" alt=""> 
+    <table>
+    <tr>
+        <td>
+            <img src="http://lh6.ggpht.com/_3mLd5CtlHo4/TDOwgRxFOwI/AAAAAAAAHTk/IpW-UEoCfDI/s640/dibujo.jpg" border="0" name="malla" alt=""> 
+        </td>
+        <td>
+            <table border=1>
+                {%if aprobados%}
+                    <tr bgcolor=red>
+                        <td>Ramos Aprobados</td>
+                    </tr>
+                    {% for ramo in aprobados %}
+                        <tr>
+                            <td>{{ramo}}</td>
+                        </tr>
+                    {% endfor %}
+                {%endif%}
+                {%if dar%}
+                    <tr bgcolor=red>
+                        <td>Ramos que puede dar</td>
+                    </tr>
+                    {% for ramo in dar %}
+                        <tr>
+                            <td>{{ramo}}</td>
+                        </tr>
+                    {% endfor %}
+                {%endif%}
+                {%if no_aprobados%}
+                    <tr bgcolor=red>
+                        <td>Ramos no Aprobados</td>
+                    </tr>
+                    {% for ramo in no_aprobados %}
+                        <tr>
+                            <td>{{ramo}}</td>
+                        </tr>
+                    {% endfor %}
+                {%endif%}
+            </table>
+        <td>
+    <tr>
+    </table>
 </div>
 {% endblock %}

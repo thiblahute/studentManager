@@ -62,6 +62,10 @@ class AddStudentAsignatura(forms.Form):
     ano = models.Ano.objects.filter(ano = now.year)[0]
     asignatura = AsignaturaWidget(models.Asignatura.objects.filter(ano=ano))
 
+class AddStudentPassed(forms.Form):
+    alumno = StudentWidget(models.Alumno.objects.filter(estado = 'activo'))
+    ramo = RamoWidget(models.Ramo.objects.all())
+
 class AddPromocionForm(forms.Form):
     ano = forms.CharField(max_length=4)
 
@@ -283,7 +287,33 @@ def addAlumnoAsignatura(request):
                               'form': form,
                               'added': added,
                               'title': 'Agregar alumnos en asignatura'})
-
+@login_required
+def addAlumnoPassed(request):
+    if not models.Profesor.objects.filter(user=request.user):
+        return redirect('/menu',
+                        permanent=True)
+    form = AddStudentPassed()
+    try:
+        alumno = request.POST['alumno']
+        ramo = request.POST['ramo']
+    except:
+        return render_to_response('addStudentPassed.html',
+                                 {'logged' : request.user.is_authenticated(),
+                                  'form': form,
+                                  'title': 'El alumno passar un ramo'})
+    ramoObj = models.Ramo.objects.filter(nombre=ramo)[0]
+    #userObj = models.User.objects.filter(
+    alumnoObj = models.Alumno.objects.filter(user=alumno)[0]
+    if alumnoObj not in ramoObj.estudiantes.all():
+        ramoObj.estudiantes.add(alumnoObj)
+        added = alumnoObj.nombre+" passo "+ramoObj.nombre
+    else:
+        added = alumnoObj.nombre+" ya habia passado "+ramoObj.nombre
+    return render_to_response('addStudentPassed.html',
+                             {'logged' : request.user.is_authenticated(),
+                              'form': form,
+                              'added': added,
+                              'title': 'Agregar alumnos en asignatura'})
 
 @login_required
 def viewStudents(request):

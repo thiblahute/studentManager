@@ -32,6 +32,29 @@ import sitioPrincipal.models as models
 def malla(request):
     username = os.path.basename(request.path)
     alumno = models.Alumno.objects.filter(user=models.User.objects.filter(username=username)[0])[0]
+    ramos_aprobados = []
+    ramos_no_aprobados = []
+    ramos_dar = []
+    for ramo in models.Ramo.objects.all():
+        estudiantes = [estudiante.user for estudiante in ramo.estudiantes.all()]
+        if alumno.user in estudiantes:
+            ramos_aprobados.append(ramo.nombre)
+        else:
+            try:
+                estudiantes_parent = [estudiante.user for estudiante in ramo.parent.estudiantes.all()]
+            except:
+                if ramo.parent is None:
+                    ramos_dar.append(ramo.nombre)
+                else:
+                    ramos_no_aprobados.append(ramo.nombre)
+                estudiantes_parent = []
+            if alumno.user in estudiantes_parent:
+                ramos_dar.append(ramo.nombre)
+            else:
+                ramos_no_aprobados.append(ramo.nombre)
     return render_to_response('malla.html',
                              {'logged' : request.user.is_authenticated(),
+                              'aprobados' : ramos_aprobados,
+                              'dar' : ramos_dar,
+                              'no_aprobados' : ramos_no_aprobados,
                               'nombre' : alumno.nombre +' '+alumno.apelido})
