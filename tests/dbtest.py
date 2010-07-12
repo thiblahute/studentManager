@@ -30,13 +30,24 @@ class dbTestCase(unittest.TestCase):
     def setUp(self):
         self.ano = models.Ano()
         self.promocion = models.Promocion()
-        self.prof1JefeCarrera = models.User()
-        self.mbruno = models.Profesor()
         self.carreraInformatica = models.Carrera()
-        self.IA = models.Ramo()
-        self.estatistica = models.Ramo()
         self.estudiante1User = models.User()
         self.estudiante1 = models.Alumno()
+
+    def addAno(self):
+        self.ano.ano = '2010'
+        self.ano.save()
+        self.failUnless(isinstance(self.ano, models.Ano))
+
+    def addPromocion(self):
+        self.promocion.ano = self.ano
+        self.promocion.save()
+        self.failUnless(isinstance(self.promocion, models.Promocion))
+
+    def addCarrera(self):
+        self.carrera.nombre = "Carrera informatica"
+        self.carrera.save()
+        self.failUnless(isinstance(self.carrera, models.Carrera))
 
     def agregarEstudiantes(self):
         self.estudiante1User.username = "estudiante1"
@@ -44,8 +55,9 @@ class dbTestCase(unittest.TestCase):
         self.estudiante1User.save()
         self.estudiante1.apelido = "Vargas"
         self.estudiante1.nombre = "david"
-        self.estudiante1.promocion = promocion
-        self.estudiante1.user = davidUser
-        self.estudiante1.user_id = davidUser.id
-        self.estudiante1.carrera = carreraInformatica
+        self.estudiante1.promocion = self.promocion
+        self.estudiante1.user = self.davidUser
+        self.estudiante1.user_id = self.davidUser.id
+        self.estudiante1.carrera = self.carreraInformatica
         self.estudiante1.save()
+        self.failUnless(isinstance(self.estudiante1, models.Alumno))

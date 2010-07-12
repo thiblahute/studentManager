@@ -12,7 +12,7 @@
         <td>
             <table border=1>
                 {%if aprobados%}
-                    <tr bgcolor=red>
+                    <tr bgcolor=green>
                         <td>Ramos Aprobados</td>
                     </tr>
                     {% for ramo in aprobados %}
@@ -22,7 +22,7 @@
                     {% endfor %}
                 {%endif%}
                 {%if dar%}
-                    <tr bgcolor=red>
+                    <tr bgcolor=orange>
                         <td>Ramos que puede dar</td>
                     </tr>
                     {% for ramo in dar %}

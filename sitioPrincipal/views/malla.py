@@ -23,8 +23,7 @@
 # the Free Software Foundation; either version 3, or (at your option)
 # any later version.
 
-from django.http import HttpResponse
-from django.shortcuts import render_to_response, redirect
+from django.shortcuts import render_to_response
 import os.path
 
 import sitioPrincipal.models as models
