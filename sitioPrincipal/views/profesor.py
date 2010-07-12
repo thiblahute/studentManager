@@ -149,12 +149,15 @@ def addRamo(request):
                                   'form': form,
                                   })
     profesorObj = models.Profesor.objects.filter(user = models.User.objects.filter(id = profesor)[0])[0]
-    ramoObj = models.Ramo.objects.filter(nombre=ramoPadre)[0]
     ramo = models.Ramo()
+    try:
+        ramoObj = models.Ramo.objects.filter(nombre=ramoPadre)[0]
+        ramo.parent = ramoObj
+    except:
+        None
     ramo.profesor = profesorObj
     ramo.nombre = nombre
     ramo.descripcion = descripcion
-    ramo.parent = ramoObj
     ramo.save()
     return redirect('/menu',
                     permanent=True)
