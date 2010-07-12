@@ -53,6 +53,7 @@ class dbTestCase(unittest.TestCase):
         self.estudiante1User.username = "estudiante1"
         self.estudiante1User.set_password("estudiante1")
         self.estudiante1User.save()
+        self.failUnless(isinstance(self.estudiante1User, models.User))
         self.estudiante1.apelido = "Vargas"
         self.estudiante1.nombre = "david"
         self.estudiante1.promocion = self.promocion
