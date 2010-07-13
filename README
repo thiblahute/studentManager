@@ -1,1 +1,26 @@
+INSTALLACION:
+------------
+    En ubuntu linux:
+        __instalacion de django __
+            + $sudo apt-get install python-django 
+    En windows:
+        Existe ejecutable windows no official para installar django, la direccion es
+        http://stickpeople.com/projects/python/win-psycopg/
 
+EJECUCION:
+---------
+    Para hacerlo carrer hay que ejecutar lo siguiente desde la carpeta del proyecto:
+        $PYTHONPATH=$PYTHONPATH:django-rest-interface python manage.py runserver
+
+PROBAR EL SISTEMA:
+-----------------
+    Para acceder al sitio, deberia  ir a la siguiente dirreccion:
+        http://127.0.0.1:8000/login/
+
+    Para hacer el login como profesor Occupar:
+        Usario: 16.345.876-1
+        Contrasena: test
+
+    Para hacer el login como estudiante Occupar:
+        Usario: 16.345.876-1
+        Contrasena: test
