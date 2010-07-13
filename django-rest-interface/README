@@ -1,0 +1,35 @@
+Django REST interface
+
+License: New BSD License
+URL: http://code.google.com/p/django-rest-interface/
+Contact: Andreas Stuhlmüller <andreas@stuhlmueller.info>
+
+The django-rest-interface project includes two parts:
+
+A) The REST interface: django_restapi
+
+resource.Resource is the generic class for REST resources. Use 
+this class for resources that don't necessarily map 1:1 to Django
+models. model_resource.Collection and model_resource.Entry are
+specific implementations that map resources 1:1 to Django models.
+
+receiver contains classes that allow you to modify the
+content type that is expected by model resources for PUT/POST
+submissions (e.g. form submission MIME types, XML, JSON, ...).
+
+responder contains classes you can use to choose which type of 
+output format model resources return. For instance, add
+"responder = XMLResponder()" to the constructor call of a
+resource in urls.py in order to use XML as a data format.
+
+authentication contains classes you can use to choose which
+type of authentication is required to access your API.
+For instance, add "authentication = HttpBasicAuthentication()"
+to the constructor call of a resource in urls.py in order to use
+HTTP Basic authentication. The default authfunc authenticates 
+username and password against django.contrib.auth.models.User.
+
+B) Tests: django_restapi_tests
+
+Contains API tests. Run "python ./manage.py test" in order
+to execute the REST interface unit tests.

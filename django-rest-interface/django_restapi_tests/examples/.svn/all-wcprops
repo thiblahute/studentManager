@@ -1,0 +1,59 @@
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/!svn/ver/64/trunk/django_restapi_tests/examples
+END
+simple.py
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/!svn/ver/40/trunk/django_restapi_tests/examples/simple.py
+END
+submission.py
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/!svn/ver/64/trunk/django_restapi_tests/examples/submission.py
+END
+fixedend_urls.py
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/!svn/ver/55/trunk/django_restapi_tests/examples/fixedend_urls.py
+END
+template.py
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/57/trunk/django_restapi_tests/examples/template.py
+END
+authentication.py
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/!svn/ver/64/trunk/django_restapi_tests/examples/authentication.py
+END
+__init__.py
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/40/trunk/django_restapi_tests/examples/__init__.py
+END
+custom_urls.py
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/!svn/ver/55/trunk/django_restapi_tests/examples/custom_urls.py
+END
+basic.py
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/!svn/ver/40/trunk/django_restapi_tests/examples/basic.py
+END
+generic_resource.py
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/!svn/ver/61/trunk/django_restapi_tests/examples/generic_resource.py
+END

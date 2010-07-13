@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/64/trunk/django_restapi_tests/templates/polls
+END
+choice_detail.html
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/!svn/ver/23/trunk/django_restapi_tests/templates/polls/choice_detail.html
+END
+poll_list.html
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/!svn/ver/23/trunk/django_restapi_tests/templates/polls/poll_list.html
+END
+400.html
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/!svn/ver/64/trunk/django_restapi_tests/templates/polls/400.html
+END
+choice_list.html
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/!svn/ver/23/trunk/django_restapi_tests/templates/polls/choice_list.html
+END
+404.html
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/!svn/ver/64/trunk/django_restapi_tests/templates/polls/404.html
+END
+405.html
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/!svn/ver/64/trunk/django_restapi_tests/templates/polls/405.html
+END
+poll_detail.html
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/!svn/ver/43/trunk/django_restapi_tests/templates/polls/poll_detail.html
+END
+poll_form.html
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/!svn/ver/54/trunk/django_restapi_tests/templates/polls/poll_form.html
+END

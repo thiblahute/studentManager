@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/!svn/ver/76/trunk/django_restapi_tests/people
+END
+__init__.py
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/!svn/ver/58/trunk/django_restapi_tests/people/__init__.py
+END
+tests.py
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/59/trunk/django_restapi_tests/people/tests.py
+END
+models.py
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/!svn/ver/76/trunk/django_restapi_tests/people/models.py
+END

@@ -1,0 +1,16 @@
+<html>
+
+	<head>
+		<title>Friendships</title>
+	</head>
+	
+	<body>
+		<h1>Friendships</h1>
+		<ol>
+		{% for friendship in friendships %}
+			<li><a href="./{{ friendship.0.id }}-{{ friendship.1.id }}/">{{ friendship.0.name }} + {{ friendship.1.name }}</a></li>
+		{% endfor %}
+		</ol>
+	</body>
+	
+</html>

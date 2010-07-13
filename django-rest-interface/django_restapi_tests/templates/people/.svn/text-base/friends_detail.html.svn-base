@@ -1,0 +1,12 @@
+<html>
+
+	<head>
+		<title>Friends: {{ friendship.0.name }} + {{ friendship.1.name }}</title>
+	</head>
+	
+	<body>
+		<h1>Friends</h1>
+		<p>{{ friendship.0.name }} ({{ friendship.0.id }}) + {{ friendship.1.name }} ({{ friendship.1.id }})</p>
+	</body>
+	
+</html>

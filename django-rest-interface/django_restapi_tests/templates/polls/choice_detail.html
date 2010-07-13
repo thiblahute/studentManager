@@ -1,0 +1,13 @@
+<html>
+
+	<head>
+		<title>Choice: {{ choice.choice }}</title>
+	</head>
+	
+	<body>
+		<h1>Choice: {{ choice.choice }}</h1>
+		<p>Belongs to poll: <a href="../../polls/{{ choice.poll.id }}/">{{ choice.poll }}</a></p>
+		<p>Votes: {{ choice.votes }}</p>
+	</body>
+	
+</html>

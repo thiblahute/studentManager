@@ -1,0 +1,16 @@
+<html>
+
+	<head>
+		<title>Choice List</title>
+	</head>
+	
+	<body>
+		<h1>Choice List</h1>
+		<ol>
+		{% for choice in choice_list %}
+			<li><a href="{{ choice.id }}/">{{ choice }}</a></li>
+		{% endfor %}
+		</ol>
+	</body>
+	
+</html>

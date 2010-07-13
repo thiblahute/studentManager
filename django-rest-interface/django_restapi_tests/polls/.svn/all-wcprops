@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/!svn/ver/77/trunk/django_restapi_tests/polls
+END
+__init__.py
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/!svn/ver/8/trunk/django_restapi_tests/polls/__init__.py
+END
+tests.py
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/!svn/ver/77/trunk/django_restapi_tests/polls/tests.py
+END
+models.py
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/76/trunk/django_restapi_tests/polls/models.py
+END

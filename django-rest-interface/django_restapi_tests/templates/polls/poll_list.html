@@ -1,0 +1,16 @@
+<html>
+
+	<head>
+		<title>Poll List</title>
+	</head>
+	
+	<body>
+		<h1>Poll List</h1>
+		<ol>
+		{% for poll in poll_list %}
+			<li><a href="{{ poll.id }}/">{{ poll }}</a></li>
+		{% endfor %}
+		</ol>
+	</body>
+	
+</html>
